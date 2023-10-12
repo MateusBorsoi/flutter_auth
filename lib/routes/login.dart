@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Center(
-            child: Text(widget.title.toString()),
+            child: Text(widget.title),
           ),
         ),
         body: Column(

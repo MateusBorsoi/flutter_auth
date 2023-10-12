@@ -1,3 +1,4 @@
+import 'package:app_auth/components/menudrawer.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -20,10 +21,11 @@ class _HomeState extends State<Home> {
           title: Center(
             child: Padding(
               padding: const EdgeInsets.only(right: 50),
-              child: Text(widget.title.toString()),
+              child: Text(widget.title),
             ),
           ),
         ),
+        drawer: const DrawerMenu(title: 'Menu'),
         body: Center(
           child: Card(
             shadowColor: Theme.of(context).colorScheme.secondary,
