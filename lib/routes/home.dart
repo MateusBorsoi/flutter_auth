@@ -16,15 +16,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void removerTarefa(int? id) async {
-    Completer<void> completer = Completer<void>();
-    if (id != null) {
-      await widget.database.anotationDao.removeAnotationById(id);
-    }
-    completer.complete();
-    completer.future.then((_) {
-      Navigator.pushNamed(context, '/home');
-    });
+  void removerTarefa(Anotation anotation) async {
+    await widget.database.anotationDao.deleteItem(anotation);
+    setState(() {});
   }
 
   @override
@@ -65,7 +59,7 @@ class _HomeState extends State<Home> {
                                   trailing: PopupMenuButton(
                                     onSelected: (value) {
                                       if (value == 'remover') {
-                                        removerTarefa(snapshot.data![index].id);
+                                        removerTarefa(snapshot.data![index]);
                                       }
                                     },
                                     itemBuilder: (BuildContext bc) {

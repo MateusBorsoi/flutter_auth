@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app_auth/db/database.dart';
 import 'package:app_auth/entitys/anotation.dart';
-import 'package:app_auth/repositories/dao/anotation_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:app_auth/components/menudrawer.dart';
 
