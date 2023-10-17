@@ -155,7 +155,7 @@ class _$AnotationDao extends AnotationDao {
   @override
   Future<List<Anotation>> getAllAnotation() async {
     return _queryAdapter.queryList('SELECT * FROM Anotation',
-        mapper: (Map<String, Object?> row) => Anotation(row['id'] as int?,
+        mapper: (Map<String, Object?> row) => Anotation(
             row['createdAt'] as String, row['updatedAt'] as String,
             observacao: row['observacao'] as String,
             titulo: row['titulo'] as String));
@@ -172,13 +172,20 @@ class _$AnotationDao extends AnotationDao {
   @override
   Stream<Anotation?> getAnotationById(int id) {
     return _queryAdapter.queryStream('SELECT * FROM Anotation WHERE id = ?1',
-        mapper: (Map<String, Object?> row) => Anotation(row['id'] as int?,
+        mapper: (Map<String, Object?> row) => Anotation(
             row['createdAt'] as String, row['updatedAt'] as String,
             observacao: row['observacao'] as String,
             titulo: row['titulo'] as String),
         arguments: [id],
         queryableName: 'Anotation',
         isView: false);
+  }
+
+  @override
+  Future<int?> removeAnotationById(int id) async {
+    return _queryAdapter.query('DELETE FROM Anotation WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => row.values.first as int,
+        arguments: [id]);
   }
 
   @override

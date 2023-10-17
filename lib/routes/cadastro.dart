@@ -1,9 +1,15 @@
+import 'dart:async';
+
+import 'package:app_auth/db/database.dart';
+import 'package:app_auth/entitys/anotation.dart';
+import 'package:app_auth/repositories/dao/anotation_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:app_auth/components/menudrawer.dart';
 
 class Cadastro extends StatefulWidget {
   final String title;
-  const Cadastro({super.key, required this.title});
+  final AppDatabase database;
+  const Cadastro({super.key, required this.title, required this.database});
 
   @override
   State<Cadastro> createState() => _CadastroState();
@@ -12,6 +18,23 @@ class Cadastro extends StatefulWidget {
 class _CadastroState extends State<Cadastro> {
   final tituloController = TextEditingController();
   final obsController = TextEditingController();
+
+  void cadastrarTarefa() async {
+    Completer<void> completer = Completer<void>();
+
+    if (tituloController.text.isNotEmpty && obsController.text.isNotEmpty) {
+      await widget.database.anotationDao.insertItem(
+        Anotation(DateTime.now().toUtc().toString(),
+            DateTime.now().toUtc().toString(),
+            observacao: obsController.text, titulo: tituloController.text),
+      );
+
+      completer.complete();
+      completer.future.then((_) {
+        Navigator.pushNamed(context, '/home');
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +105,9 @@ class _CadastroState extends State<Cadastro> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            cadastrarTarefa();
+          },
           tooltip: 'Increment',
           child: const Icon(Icons.save),
         ),

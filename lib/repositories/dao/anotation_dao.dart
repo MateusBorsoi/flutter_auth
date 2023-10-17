@@ -12,4 +12,7 @@ abstract class AnotationDao extends IRepositoryDaoInterface<Anotation> {
 
   @Query('SELECT * FROM Anotation WHERE id = :id')
   Stream<Anotation?> getAnotationById(int id);
+
+  @Query('DELETE FROM Anotation WHERE id = :id')
+  Future<int?> removeAnotationById(int id);
 }
