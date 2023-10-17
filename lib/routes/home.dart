@@ -1,5 +1,5 @@
-import 'package:app_auth/components/menudrawer.dart';
 import 'package:flutter/material.dart';
+import 'package:app_auth/components/menudrawer.dart';
 
 class Home extends StatefulWidget {
   final String title;
@@ -31,9 +31,20 @@ class _HomeState extends State<Home> {
             shadowColor: Theme.of(context).colorScheme.secondary,
             child: const Padding(
               padding: EdgeInsets.all(15),
-              child: Text('Seja bem vindo(a)'),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                ),
+              ),
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/cadastro');
+          },
+          tooltip: 'Cadastro',
+          child: const Icon(Icons.add),
         ),
       ),
     );
