@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:app_auth/db/database.dart';
 import 'package:app_auth/entitys/anotation.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +15,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final editTituloController = TextEditingController();
+  final editAnotationController = TextEditingController();
+
   void removerTarefa(Anotation anotation) async {
     await widget.database.anotationDao.deleteItem(anotation);
-    setState(() {});
+    setState(() {
+      Navigator.pop(context);
+    });
+  }
+
+  void atualizarTarefa(int? id) async {
+    if (editAnotationController.text.isNotEmpty &&
+        editTituloController.text.isNotEmpty) {
+      Anotation anotation = Anotation(
+          id: id,
+          observacao: editAnotationController.text,
+          titulo: editTituloController.text);
+      await widget.database.anotationDao.updateItem(anotation);
+      setState(() {
+        Navigator.pop(context);
+      });
+    }
   }
 
   @override
@@ -59,7 +77,93 @@ class _HomeState extends State<Home> {
                                   trailing: PopupMenuButton(
                                     onSelected: (value) {
                                       if (value == 'remover') {
-                                        removerTarefa(snapshot.data![index]);
+                                        showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                            title:
+                                                const Text('Remover anotação'),
+                                            content: const Text(
+                                                'Deseja realmente remover esta anotação ?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancelar'),
+                                                child: const Text('Cancelar'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  removerTarefa(
+                                                      snapshot.data![index]);
+                                                },
+                                                child: const Text('Confirmar'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                      if (value == 'editar') {
+                                        editAnotationController.text =
+                                            snapshot.data![index].observacao;
+                                        editTituloController.text =
+                                            snapshot.data![index].titulo;
+
+                                        showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                            title:
+                                                const Text('Editar anotação'),
+                                            content: SizedBox(
+                                              height: 300,
+                                              width: 400,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 25),
+                                                    child: TextField(
+                                                      controller:
+                                                          editTituloController,
+                                                      decoration:
+                                                          const InputDecoration(
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                        labelText: 'Titulo',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  TextField(
+                                                    maxLines: 4,
+                                                    controller:
+                                                        editAnotationController,
+                                                    decoration:
+                                                        const InputDecoration(
+                                                      border:
+                                                          OutlineInputBorder(),
+                                                      labelText: 'Observação',
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancelar'),
+                                                child: const Text('Cancelar'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  atualizarTarefa(
+                                                      snapshot.data![index].id);
+                                                },
+                                                child: const Text('Confirmar'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
                                       }
                                     },
                                     itemBuilder: (BuildContext bc) {

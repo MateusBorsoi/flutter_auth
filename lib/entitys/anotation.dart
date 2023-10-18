@@ -1,11 +1,11 @@
-import 'package:app_auth/entitys/base.dart';
 import 'package:floor/floor.dart';
 
 @Entity(tableName: 'Anotation')
-class Anotation extends Base {
+class Anotation {
+  @PrimaryKey(autoGenerate: true)
+  int? id;
   final String titulo;
   final String observacao;
 
-  Anotation(super.createdAt, super.updatedAt,
-      {required this.observacao, required this.titulo});
+  Anotation({this.id, required this.observacao, required this.titulo});
 }

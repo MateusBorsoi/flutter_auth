@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Anotation` (`titulo` TEXT NOT NULL, `observacao` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `Anotation` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `titulo` TEXT NOT NULL, `observacao` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -108,11 +108,9 @@ class _$AnotationDao extends AnotationDao {
             database,
             'Anotation',
             (Anotation item) => <String, Object?>{
-                  'titulo': item.titulo,
-                  'observacao': item.observacao,
                   'id': item.id,
-                  'createdAt': item.createdAt,
-                  'updatedAt': item.updatedAt
+                  'titulo': item.titulo,
+                  'observacao': item.observacao
                 },
             changeListener),
         _anotationUpdateAdapter = UpdateAdapter(
@@ -120,11 +118,9 @@ class _$AnotationDao extends AnotationDao {
             'Anotation',
             ['id'],
             (Anotation item) => <String, Object?>{
-                  'titulo': item.titulo,
-                  'observacao': item.observacao,
                   'id': item.id,
-                  'createdAt': item.createdAt,
-                  'updatedAt': item.updatedAt
+                  'titulo': item.titulo,
+                  'observacao': item.observacao
                 },
             changeListener),
         _anotationDeletionAdapter = DeletionAdapter(
@@ -132,11 +128,9 @@ class _$AnotationDao extends AnotationDao {
             'Anotation',
             ['id'],
             (Anotation item) => <String, Object?>{
-                  'titulo': item.titulo,
-                  'observacao': item.observacao,
                   'id': item.id,
-                  'createdAt': item.createdAt,
-                  'updatedAt': item.updatedAt
+                  'titulo': item.titulo,
+                  'observacao': item.observacao
                 },
             changeListener);
 
@@ -156,7 +150,7 @@ class _$AnotationDao extends AnotationDao {
   Future<List<Anotation>> getAllAnotation() async {
     return _queryAdapter.queryList('SELECT * FROM Anotation',
         mapper: (Map<String, Object?> row) => Anotation(
-            row['createdAt'] as String, row['updatedAt'] as String,
+            id: row['id'] as int?,
             observacao: row['observacao'] as String,
             titulo: row['titulo'] as String));
   }
@@ -173,7 +167,7 @@ class _$AnotationDao extends AnotationDao {
   Stream<Anotation?> getAnotationById(int id) {
     return _queryAdapter.queryStream('SELECT * FROM Anotation WHERE id = ?1',
         mapper: (Map<String, Object?> row) => Anotation(
-            row['createdAt'] as String, row['updatedAt'] as String,
+            id: row['id'] as int?,
             observacao: row['observacao'] as String,
             titulo: row['titulo'] as String),
         arguments: [id],
@@ -182,26 +176,19 @@ class _$AnotationDao extends AnotationDao {
   }
 
   @override
-  Future<int?> removeAnotationById(int id) async {
-    return _queryAdapter.query('DELETE FROM Anotation WHERE id = ?1',
-        mapper: (Map<String, Object?> row) => row.values.first as int,
-        arguments: [id]);
-  }
-
-  @override
-  Future<int> insertItem(Anotation item) {
+  Future<int> insertItem(Anotation anotation) {
     return _anotationInsertionAdapter.insertAndReturnId(
-        item, OnConflictStrategy.abort);
+        anotation, OnConflictStrategy.abort);
   }
 
   @override
-  Future<int> updateItem(Anotation item) {
+  Future<int> updateItem(Anotation anotation) {
     return _anotationUpdateAdapter.updateAndReturnChangedRows(
-        item, OnConflictStrategy.abort);
+        anotation, OnConflictStrategy.abort);
   }
 
   @override
-  Future<int> deleteItem(Anotation item) {
-    return _anotationDeletionAdapter.deleteAndReturnChangedRows(item);
+  Future<int> deleteItem(Anotation anotation) {
+    return _anotationDeletionAdapter.deleteAndReturnChangedRows(anotation);
   }
 }

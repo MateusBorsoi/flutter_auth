@@ -23,8 +23,7 @@ class _CadastroState extends State<Cadastro> {
 
     if (tituloController.text.isNotEmpty && obsController.text.isNotEmpty) {
       await widget.database.anotationDao.insertItem(
-        Anotation(DateTime.now().toUtc().toString(),
-            DateTime.now().toUtc().toString(),
+        Anotation(
             observacao: obsController.text, titulo: tituloController.text),
       );
 

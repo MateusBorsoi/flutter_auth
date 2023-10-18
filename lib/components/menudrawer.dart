@@ -39,7 +39,21 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 ),
               ],
             ),
-          )
+          ),
+          ListTile(
+            title: const Text('Home'),
+            leading: const Icon(Icons.home),
+            onTap: () {
+              Navigator.pushNamed(context, '/home');
+            },
+          ),
+          ListTile(
+            title: const Text('Cadastrar'),
+            leading: const Icon(Icons.new_label),
+            onTap: () {
+              Navigator.pushNamed(context, '/cadastro');
+            },
+          ),
         ],
       ),
     );

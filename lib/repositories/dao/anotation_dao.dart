@@ -1,9 +1,8 @@
 import 'package:app_auth/entitys/anotation.dart';
-import 'package:app_auth/repositories/interfaces/RepositoryDaoInterface.dart';
 import 'package:floor/floor.dart';
 
 @dao
-abstract class AnotationDao extends IRepositoryDaoInterface<Anotation> {
+abstract class AnotationDao {
   @Query('SELECT * FROM Anotation')
   Future<List<Anotation>> getAllAnotation();
 
@@ -13,6 +12,12 @@ abstract class AnotationDao extends IRepositoryDaoInterface<Anotation> {
   @Query('SELECT * FROM Anotation WHERE id = :id')
   Stream<Anotation?> getAnotationById(int id);
 
-  @Query('DELETE FROM Anotation WHERE id = :id')
-  Future<int?> removeAnotationById(int id);
+  @insert
+  Future<int> insertItem(Anotation anotation);
+
+  @update
+  Future<int> updateItem(Anotation anotation);
+
+  @delete
+  Future<int> deleteItem(Anotation anotation);
 }
