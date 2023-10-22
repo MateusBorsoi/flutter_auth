@@ -15,27 +15,45 @@ class _TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<Todo>>(
-        future: fetchTodos(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 75,
-                    color: Colors.white,
-                    child: Center(
-                      child: Text(snapshot.data![index].title),
-                    ),
-                  );
-                });
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          }
-          // By default show a loading spinner.
-          return const CircularProgressIndicator();
-        },
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 50),
+            child: Text(widget.title),
+          ),
+        ),
+      ),
+      drawer: const DrawerMenu(title: 'Menu'),
+      body: Center(
+        child: FutureBuilder<List<Todo>>(
+          future: fetchTodos(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: 75,
+                      color: Colors.white,
+                      child: Center(
+                        child: Card(
+                          child: ListTile(
+                            title: Text(snapshot.data![index].id.toString()),
+                            subtitle: Text(snapshot.data![index].title),
+                            trailing: Text(
+                                'Completado: ${snapshot.data![index].completed == true ? 'Sim' : 'Não'}'),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+            } else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            }
+            return const CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }
