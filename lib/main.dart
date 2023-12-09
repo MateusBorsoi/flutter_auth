@@ -1,6 +1,7 @@
 import 'package:app_auth/db/database.dart';
 import 'package:app_auth/routes/cadastro.dart';
 import 'package:app_auth/routes/home.dart';
+import 'package:app_auth/routes/listaProdutos.dart';
 import 'package:app_auth/routes/login.dart';
 import 'package:app_auth/routes/todolist.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,9 @@ class _AppAuthState extends State<AppAuth> {
               database: widget.database,
               key: UniqueKey(),
             ),
-        '/todolist': (context) => const TodoList(title: 'Todo List')
+        '/todolist': (context) => const TodoList(title: 'Todo List'),
+        '/listaProdutos': (context) =>
+            const ListaProdutos(title: 'Lista Produtos'),
       },
       theme: ThemeData(
         useMaterial3: true,

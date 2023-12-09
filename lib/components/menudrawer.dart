@@ -61,6 +61,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
               Navigator.pushNamed(context, '/todolist');
             },
           ),
+          ListTile(
+            title: const Text('Lista Produtos'),
+            leading: const Icon(Icons.list),
+            onTap: () {
+              Navigator.pushNamed(context, '/listaProdutos');
+            },
+          ),
         ],
       ),
     );
