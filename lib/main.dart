@@ -1,4 +1,5 @@
 import 'package:app_auth/db/database.dart';
+import 'package:app_auth/routes/cadastrarProduto.dart';
 import 'package:app_auth/routes/cadastro.dart';
 import 'package:app_auth/routes/home.dart';
 import 'package:app_auth/routes/listaProdutos.dart';
@@ -43,6 +44,8 @@ class _AppAuthState extends State<AppAuth> {
         '/todolist': (context) => const TodoList(title: 'Todo List'),
         '/listaProdutos': (context) =>
             const ListaProdutos(title: 'Lista Produtos'),
+        '/cadastrarProduto': (context) =>
+            const CadastrarProduto(title: 'Cadastrar Produto'),
       },
       theme: ThemeData(
         useMaterial3: true,

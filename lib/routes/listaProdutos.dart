@@ -56,6 +56,13 @@ class _ListaProdutosState extends State<ListaProdutos> {
           },
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/cadastrarProduto');
+        },
+        tooltip: 'Cadastrar Produto',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
