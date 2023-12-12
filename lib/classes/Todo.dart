@@ -6,15 +6,20 @@ class Todo {
 
   Todo(
       {required this.userId,
+      required this.completed,
       required this.id,
-      required this.title,
-      required this.completed});
+      required this.title});
 
   factory Todo.fromJson(Map<String, dynamic> json) {
-    return Todo(
-        userId: json['userId'],
-        id: json['id'],
-        title: json['title'],
-        completed: json['completed']);
+    return switch (json) {
+      {
+        'userId': int userId,
+        'id': int id,
+        'title': String title,
+        'completed': bool completed,
+      } =>
+        Todo(completed: completed, id: id, title: title, userId: userId),
+      _ => throw const FormatException('Falha ao carregar lista todo'),
+    };
   }
 }

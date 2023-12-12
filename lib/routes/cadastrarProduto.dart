@@ -64,17 +64,6 @@ class _CadastrarProdutoState extends State<CadastrarProduto> {
                           labelText: 'Complemento'),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: ImageField(
-                        texts: const {
-                          'fieldFormText': 'Importar imagem',
-                          'titleText': 'Importar imagem'
-                        },
-                        onSave: (List<ImageAndCaptionModel>?
-                            imageAndCaptionList) {},
-                      ),
-                    ),
-                    Padding(
                       padding: const EdgeInsets.only(top: 12),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,6 +117,17 @@ class _CadastrarProdutoState extends State<CadastrarProduto> {
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: ImageField(
+                        texts: const {
+                          'fieldFormText': 'Importar imagem',
+                          'titleText': 'Importar imagem'
+                        },
+                        onSave: (List<ImageAndCaptionModel>?
+                            imageAndCaptionList) {},
                       ),
                     ),
                   ],

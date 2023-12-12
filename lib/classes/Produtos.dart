@@ -17,13 +17,25 @@ class Produto {
       required this.quantidade});
 
   factory Produto.fromJson(Map<String, dynamic> json) {
-    return Produto(
-        id: json['id'],
-        descricao: json['descricao'],
-        preco: json['preco'],
-        imagens: json['imagens'],
-        complemento: json['complemento'],
-        promocional: json['promocional'],
-        quantidade: json['quantidade']);
+    return switch (json) {
+      {
+        'id': int id,
+        'descricao': String descricao,
+        'preco': String preco,
+        'imagens': String imagens,
+        'complemento': String complemento,
+        'promocional': String promocional,
+        'quantidade': String quantidade
+      } =>
+        Produto(
+            id: id,
+            descricao: descricao,
+            preco: preco,
+            imagens: imagens,
+            complemento: complemento,
+            promocional: promocional,
+            quantidade: quantidade),
+      _ => throw const FormatException('Falha ao carregar produtos'),
+    };
   }
 }
